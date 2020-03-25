@@ -1,0 +1,7 @@
+name: BedrockCoins
+author: benjamin.
+website: Http://b-njamin.xyz/
+description: Simple money API for PocketMine-MP (MySQL)
+version: 1.1.0
+api: 3.2.0
+main: ben\BedrockCoins\BedrockCoins
