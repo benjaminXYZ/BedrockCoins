@@ -20,9 +20,9 @@ You can edit the language easily in the language.json file in `BedrockCoins/reso
 
 ## Developer Stuff
 
-### Get coin
+### Get coins
 ```php
-BedrockCoins::getInstance()->getCoins($playername, $coins);
+BedrockCoins::getInstance()->getCoins($playername);
 ```
 
 ### Add coins
