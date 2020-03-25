@@ -1,0 +1,13 @@
+{
+  "yourcoins": "{prefix} §7Deine Coins: §e{coins}",
+  "seecoins": "{prefix} §7Coins von {playername}: §e{coins}",
+  "removecoins": "{prefix} §7{playername} wurden §e{coins} Coins §7entzogen",
+  "setcoins": "{prefix} §7Die Coins von {playername} wurden auf §e{coins} §7gesetzt",
+  "addcoins": "{prefix} §7{playername} wurden §e{coins} Coins §7gegeben",
+  "paycoins": "{prefix} §7Du hast {playername} §e{coins} §7bezahlt",
+  "receivecoins": "{prefix} §7{playername} hat dir §e{coins} §7bezahlt",
+  "notenoughcoins": "{prefix} §7Du hast nicht genügend Coins",
+  "playernotexisting": "{prefix} §7Der Spieler §e{playername} §7existiert nicht",
+  "nopermission": "{prefix} §7Du besitzt nicht die benötigten Rechte für diesen Befehl",
+  "commandusage": "{prefix} §7{usage}"
+}

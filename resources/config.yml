@@ -1,0 +1,14 @@
+---
+#Your MySQL data
+mysql:
+  host: yourhost.com
+  user: youruser
+  password: yourpassword
+  database: yourdatabase
+  port: 3306
+
+#Use §0-1 or §a-z for color
+prefix: "§8BedrockCoins §l»§r"
+
+startcoins: 100
+---
