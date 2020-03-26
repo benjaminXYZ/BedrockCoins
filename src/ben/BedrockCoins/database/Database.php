@@ -79,7 +79,7 @@ class Database {
     public function initializePlayer(Player $player) : void {
         $name = $player->getName();
         $uuid = $player->getUniqueId()->toString();
-        $coins = BedrockCoins::$startcoins;
+        $coins = BedrockCoins::getInstance()->startcoins;
         $this->medoo->insert("bedrockcoins", ["uuid" => $uuid, "p_name" => $name, "p_coins" => $coins]);
     }
 
