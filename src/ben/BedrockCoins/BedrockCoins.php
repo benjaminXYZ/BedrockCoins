@@ -8,7 +8,6 @@ use ben\BedrockCoins\commands\PayCoinsCommand;
 use ben\BedrockCoins\commands\RemoveCoinsCommand;
 use ben\BedrockCoins\commands\SeeCoinsCommand;
 use ben\BedrockCoins\commands\SetCoinsCommand;
-use ben\BedrockCoins\commands\Top10CoinsCommand;
 use ben\BedrockCoins\database\Database;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
@@ -16,18 +15,20 @@ use pocketmine\utils\TextFormat;
 
 class BedrockCoins extends PluginBase {
 
+    private static $instance;
+
     public static $prefix = TextFormat::DARK_GRAY . "BedrockCoins" . TextFormat::BOLD . " »" . TextFormat::RESET;
     
     public $language = [];
 
     public $startcoins = 0;
 
-    public static $instance;
-
     public $database;
 
     public function onLoad() {
         $this->getLogger()->info("Loading plugin");
+
+        self::$instance = $this;
 
         $this->saveDefaultConfig();
 
@@ -39,8 +40,6 @@ class BedrockCoins extends PluginBase {
     public function onEnable() {
 
         $this->getLogger()->info("BedrockCoins has been enabled");
-
-        self::$instance = $this;
 
         $this->database = new Database();
 
@@ -55,10 +54,6 @@ class BedrockCoins extends PluginBase {
 
     }
 
-    public static function getInstance() : self {
-        return self::$instance;
-    }
-
     private function loadPrefix() {
         $config = new Config($this->getDataFolder() . "config.yml", Config::YAML);
         self::$prefix = $config->get("prefix");
@@ -67,7 +62,7 @@ class BedrockCoins extends PluginBase {
     private function loadLanguage() {
         foreach ($this->getResources() as $resource) {
             if ($resource->isFile() && $resource->getFilename() === "language.json") {
-                self::$language = json_decode(file_get_contents($resource), true);
+                self::getInstance()->language = json_decode(file_get_contents($resource), true);
             }
         }
     }
@@ -75,15 +70,15 @@ class BedrockCoins extends PluginBase {
     private function loadStartcoins() {
         $config = new Config($this->getDataFolder() . "config.yml", Config::YAML);
         $coins = $config->get("startcoins");
-        if (!is_int($coins)) {
+        if (!is_numeric($coins)) {
             $this->getLogger()->error("Startcoins has to be an integer");
             $this->getServer()->getPluginManager()->disablePlugin($this);
             return;
         }
-        self::$startcoins = $coins;
+        self::getInstance()->startcoins = $coins;
     }
 
-    public function getMessage($message, $name = null, $coins = null, $usage = null) : string {
+    public function getMessage($message, $name = null, $coins = null, $usage = null) {
         $message = str_replace("{prefix}", self::$prefix, $message);
         if ($name != null) {
             $message = str_replace("{playername}", $name, $message);
@@ -97,29 +92,33 @@ class BedrockCoins extends PluginBase {
         return $message;
     }
 
-    public static function getCoins(string $name) : int {
+    public static function getCoins($name) : int {
         if (self::getInstance()->database->existsPlayer($name)) {
             return self::getInstance()->database->getCoins($name)["p_coins"];
         }
         return null;
     }
 
-    public function addCoins(string $name, int $coins) {
+    public function addCoins($name, int $coins) {
         if (self::getInstance()->database->existsPlayer($name)) {
             self::getInstance()->database->addCoins($name, $coins);
         }
     }
 
-    public function removeCoins(string $name, int $coins) {
+    public function removeCoins($name, int $coins) {
         if (self::getInstance()->database->existsPlayer($name)) {
             self::getInstance()->database->removeCoins($name, $coins);
         }
     }
 
-    public function setCoins(string $name, int $coins) {
+    public function setCoins($name, int $coins) {
         if (self::getInstance()->database->existsPlayer($name)) {
             self::getInstance()->database->setCoins($name, $coins);
         }
+    }
+
+    public static function getInstance() : self {
+        return BedrockCoins::$instance;
     }
 
 }
