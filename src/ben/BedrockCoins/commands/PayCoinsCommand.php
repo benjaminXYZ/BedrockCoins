@@ -37,7 +37,7 @@ class PayCoinsCommand extends Command {
             return;
         }
         $sender->sendMessage(BedrockCoins::getInstance()->getMessage(BedrockCoins::getInstance()->language["paycoins"], $args[0], $coins));
-        BedrockCoins::getInstance()->removeCoins($args[0], $coins);
+        BedrockCoins::getInstance()->removeCoins($sender->getName(), $coins);
         BedrockCoins::getInstance()->addCoins($args[0], $coins);
         $player = BedrockCoins::getInstance()->getInstance()->getServer()->getPlayer($args[0]);
         if ($player != null && $player->isOnline()) {
